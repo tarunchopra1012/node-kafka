@@ -1,6 +1,7 @@
 const { Kafka } = require("kafkajs");
 const stompit = require("stompit");
 const async = require("async");
+require("dotenv").config();
 
 // Configuration for the Kafka brokers
 const kafkaConfig = {
@@ -29,8 +30,8 @@ const connectOptions = {
     "heart-beat": "15000,15000",
     "client-id": "",
     host: "/",
-    login: "xxxxxxxxxxxxxxxxxxxxxxx",
-    passcode: "xxxxxxxxxxxxxx",
+    login: process.env.LOGIN_EMAIL,
+    passcode: process.env.LOGIN_PASSWORD,
   },
 };
 

@@ -1,6 +1,17 @@
 # Integration of Apache Kafka with Node.js 
 ## To handle railway data, with a MySQL database for storing the processed information.
 
+### Screenshots
+
+![node admin.js](screenshots/adminjs.png)
+![node producer.js](screenshots/producerjs.png)
+![node consumer.js](screenshots/consumerjs-1.png)
+![node consumer.js](screenshots/consumerjs-2.png)
+![node consumer.js](screenshots/consumerjs-3.png)
+![Database active_tains](screenshots/database-1.png)
+![Database cancelled_tains](screenshots/database-2.png)
+
+
 ### **1. Setting Up Kafka and Zookeeper with Docker**
 The two Docker commands you ran are used to start Zookeeper and Kafka, which are the backbone of this system:
 
