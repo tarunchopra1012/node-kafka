@@ -1,4 +1,5 @@
-# This code represents a system that integrates Apache Kafka with Node.js to handle railway data, with a MySQL database for storing the processed information.
+# Integration of Apache Kafka with Node.js 
+## To handle railway data, with a MySQL database for storing the processed information.
 
 ### **1. Setting Up Kafka and Zookeeper with Docker**
 The two Docker commands you ran are used to start Zookeeper and Kafka, which are the backbone of this system:
