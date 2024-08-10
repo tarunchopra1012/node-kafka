@@ -10,6 +10,7 @@
 ![node consumer.js](screenshots/consumerjs-3.png)
 ![Database active_tains](screenshots/database-1.png)
 ![Database cancelled_tains](screenshots/database-2.png)
+![Docker](screenshots/docker.png)
 
 
 ### **1. Setting Up Kafka and Zookeeper with Docker**
