@@ -2,6 +2,7 @@ const { Kafka } = require("kafkajs");
 const stompit = require("stompit");
 const async = require("async");
 require("dotenv").config();
+const { connectRabbitMQ, publishToQueue } = require("./rabbitmq");
 
 // Configuration for the Kafka brokers
 const kafkaConfig = {
@@ -22,6 +23,9 @@ const initKafkaProducer = async () => {
 
 // Initialize Kafka producer
 initKafkaProducer();
+
+// RabbitMQ setup
+connectRabbitMQ();
 
 const connectOptions = {
   host: "publicdatafeeds.networkrail.co.uk",
@@ -99,12 +103,20 @@ connectionManager.connect((error, client, reconnect) => {
                   stanox
                 );
 
-                // Send the message to Kafka
-                sendToKafka("train_activation", {
+                const messagePayload = {
                   timestamp,
                   trainId: item.body.train_id,
                   stanox,
-                });
+                };
+
+                // Send the message to Kafka
+                sendToKafka("train_activation", messagePayload);
+
+                // Send the message to RabbitMQ
+                publishToQueue(
+                  "train_activation_queue",
+                  JSON.stringify(messagePayload)
+                );
               } else if (item.header.msg_type === "0002") {
                 // Train Cancellation
                 const stanox = item.body.loc_stanox || "N/A";
@@ -120,12 +132,21 @@ connectionManager.connect((error, client, reconnect) => {
                 );
 
                 // Send the message to Kafka
-                sendToKafka("train_cancellation", {
+                const messagePayload = {
                   timestamp,
                   trainId: item.body.train_id,
                   stanox,
                   reasonCode,
-                });
+                };
+
+                // Send the message to Kafka
+                sendToKafka("train_cancellation", messagePayload);
+
+                // Send the message to RabbitMQ
+                publishToQueue(
+                  "train_cancellation_queue",
+                  JSON.stringify(messagePayload)
+                );
               }
             }
 

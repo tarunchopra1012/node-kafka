@@ -1,5 +1,6 @@
 const { Kafka, logLevel } = require("kafkajs");
 const mysql = require("mysql2");
+const { connectRabbitMQ, consumeFromQueue } = require("./rabbitmq");
 require("dotenv").config();
 
 // Create MySQL connection pool
@@ -23,6 +24,28 @@ pool
   .catch((err) => {
     console.error("Error connecting to the database:", err);
   });
+
+// Connect to RabbitMQ and consume messages
+connectRabbitMQ().then(() => {
+  consumeFromQueue("train_activation_queue", (message) => {
+    const processedMessage = JSON.parse(message);
+    insertActiveTrain(
+      processedMessage.trainId,
+      processedMessage.stanox,
+      processedMessage.timestamp
+    );
+  });
+
+  consumeFromQueue("train_cancellation_queue", (message) => {
+    const processedMessage = JSON.parse(message);
+    insertCancelledTrain(
+      processedMessage.trainId,
+      processedMessage.stanox,
+      processedMessage.reasonCode,
+      processedMessage.timestamp
+    );
+  });
+});
 
 // Configuration for the Kafka brokers
 const kafkaConfig = {

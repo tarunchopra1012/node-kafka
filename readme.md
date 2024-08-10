@@ -11,6 +11,7 @@
 ![Database active_tains](screenshots/database-1.png)
 ![Database cancelled_tains](screenshots/database-2.png)
 ![Docker](screenshots/docker.png)
+![RabbitMQ Dashboard](screenshots/rabbitmq.png)
 
 
 ### **1. Setting Up Kafka and Zookeeper with Docker**
@@ -105,6 +106,16 @@ process.on("SIGTERM", async () => {
   process.exit(0);
 });
 ```
+
+### **8. Adding RabbitMQ
+
+  ```bash
+  docker pull rabbitmq:management
+  ```
+
+  ```bash
+  docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+  ```
 
 ### **How It All Ties Together**
 Imagine a railway system where you need to keep track of trains: when they start and when they get canceled. This system listens to live data feeds about trains, processes that information, and uses Kafka to manage the flow of data between different components. Kafka acts like a message bus, ensuring that every piece of data gets where it needs to go—whether that’s storing it in a database or triggering other actions based on the data.

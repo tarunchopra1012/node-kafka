@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "amqplib": "^0.10.4",
     "async": "^3.2.5",
     "dotenv": "^16.4.5",
     "kafkajs": "^2.2.4",
